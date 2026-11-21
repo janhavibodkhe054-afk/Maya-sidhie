@@ -262,7 +262,7 @@ export default function OurHeritage() {
             "
           >
             <motion.img
-              src="/heritage.webp"
+              src="/solapur.jpg"
               alt="Traditional Maharashtrian food heritage"
               loading="lazy"
               className="

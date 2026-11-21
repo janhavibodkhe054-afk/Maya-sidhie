@@ -22,6 +22,10 @@ import { LanguageProvider } from "./context/LanguageContext";
 // Pages
 import Home from "./pages/Home";
 import About from "./pages/About";
+import Product from "./pages/Product";
+import Contact from "./pages/Contact";
+import Quality from "./pages/Quality";
+import Bulk from "./pages/Bulk";
 
 // Future Pages
 // import Products from "./pages/Products";
@@ -38,7 +42,10 @@ function AnimatedRoutes() {
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
-
+        <Route path="/products" element={<Product />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/quality" element={<Quality />} />
+        <Route path="/bulk-enquiry" element={<Bulk />} />
         {/* Future Routes */}
         {/* <Route path="/products" element={<Products />} />
         <Route path="/gallery" element={<Gallery />} />

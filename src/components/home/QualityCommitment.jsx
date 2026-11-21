@@ -88,7 +88,7 @@ const ease = [0.22, 1, 0.36, 1];
 function DotExpandButton({ children }) {
   return (
     <Link
-      to="/about"
+  to="/quality#preparation-process"
       className="
         group relative inline-flex
         min-h-[54px] items-center

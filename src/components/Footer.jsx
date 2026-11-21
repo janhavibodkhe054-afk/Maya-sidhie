@@ -1,125 +1,344 @@
-
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { motion, useReducedMotion } from "framer-motion";
+
 import {
   ArrowUpRight,
   ArrowRight,
   MapPin,
   Phone,
   Globe,
-  Heart,
   ChevronUp,
+  Package,
+  MessageCircle,
+  Code2,
 } from "lucide-react";
-import {
-  FaFacebookF,
-  FaInstagram,
-  FaYoutube,
-} from "react-icons/fa";
+
 import { LanguageContext } from "../context/LanguageContext";
 
 // ==========================================
 // CONFIGURATION
 // ==========================================
 
-const PHONE = "+919922604685";
-const DISPLAY_PHONE = "+91 9922604685";
-const WEBSITE = "https://mayassiddhe.com";
+const PHONE = "918766493543";
+const WHATSAPP = `https://wa.me/${PHONE}`;
+const HASHGRID_URL = "https://www.hashgridtech.com/";
 
-// Add your verified social profile URLs here.
-const SOCIALS = [
-  // { icon: FaFacebookF, label: "Facebook", url: "https://facebook.com/..." },
-  // { icon: FaInstagram, label: "Instagram", url: "https://instagram.com/..." },
-  // { icon: FaYoutube, label: "YouTube", url: "https://youtube.com/..." },
+const MAP_URL = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+  "Siddhalaxmi Mahila Gruh Udyog, Narishing Heights, Near Kadadi School, Bhavani Peth, Solapur, Maharashtra 413002"
+)}`;
+
+const ease = [0.22, 1, 0.36, 1];
+
+// ==========================================
+// NAVIGATION & PRODUCTS
+// ==========================================
+
+const links = [
+  { en: "Home", mr: "मुख्यपृष्ठ", to: "/" },
+  { en: "About Us", mr: "आमच्याबद्दल", to: "/about" },
+  { en: "Our Products", mr: "आमची उत्पादने", to: "/products" },
+  
+  {
+    en: "Quality & Manufacturing",
+    mr: "गुणवत्ता व उत्पादन",
+    to: "/quality",
+  },
+  { en: "Bulk Enquiry", mr: "घाऊक चौकशी", to: "/bulk-enquiry" },
+  { en: "Contact Us", mr: "संपर्क करा", to: "/contact" },
 ];
+
+const products = [
+  { en: "Solapuri Shenga Chutney", mr: "सोलापुरी शेंगा चटणी" },
+  { en: "Roasted Peanuts", mr: "भाजलेले शेंगदाणे" },
+  { en: "Blanched Peanuts", mr: "साल काढलेले शेंगदाणे" },
+  { en: "Masala Peanuts", mr: "मसाला शेंगदाणे" },
+  { en: "Crunchy Masala Peanuts", mr: "कुरकुरीत मसाला शेंगदाणे" },
+  { en: "Spicy Peanut Chivda", mr: "तिखट शेंगदाणा चिवडा" },
+  { en: "Peanut Ladoo", mr: "शेंगदाणा लाडू" },
+];
+
+// ==========================================
+// BILINGUAL CONTENT
+// ==========================================
 
 const content = {
   en: {
-    eyebrow: "ROOTED IN TRADITION",
+    eyebrow: "LET'S GROW TOGETHER",
+
+    heading: "Traditional Taste. New Opportunities.",
+
+    description:
+      "Interested in our products for your store or business? Connect with us for bulk enquiries.",
+
+    bulkCTA: "Send Bulk Enquiry",
+
+    talk: "Let's Talk",
+
     brandDescription:
-      "Inspired by Solapur's distinctive food heritage and a tradition associated with the LALA name since 1968, Maya's LALA Food Products brings familiar Maharashtrian flavours to today's tables.",
+      "Inspired by Solapur's distinctive food heritage and a tradition associated with the LALA name since 1968, we bring familiar Maharashtrian flavours to today's tables.",
 
-    heritageSmall: "A TRADITION OF TASTE",
-    heritageYear: "SINCE 1968",
+    heritage: "A Tradition of Taste Since 1968",
 
-    explore: "Explore",
-    productsHeading: "Our Products",
-    contactHeading: "Get in Touch",
+    explore: "Quick Links",
 
-    links: [
-      { label: "Home", to: "/" },
-      { label: "About Us", to: "/about" },
-      { label: "Our Products", to: "/products" },
-      { label: "Contact Us", to: "/contact" },
-    ],
+    products: "Our Products",
 
-    products: [
-      "Solapuri Shenga Chutney",
-      "Roasted Peanuts",
-      "Blanched Peanuts",
-      "Masala Peanuts",
-      "Crunchy Masala Peanuts",
-      "Spicy Peanut Chivda",
-      "Peanut Ladoo",
-    ],
+    contact: "Get in Touch",
 
-    location: "Solapur, Maharashtra, India",
-    callUs: "Call Us",
-    website: "Website",
-    enquiry: "Have a Business Enquiry?",
-    enquiryText:
-      "Connect with us to discuss our products, availability and order requirements.",
-    enquiryCTA: "Contact Our Team",
+    addressLabel: "Our Address",
+
+    address:
+  "Siddhalaxmi Mahila Gruh Udyog, Narishing Heights, Near Kadadi School, Bhavani Peth, Solapur, Maharashtra – 413002.",
+
+    phone: "Call Us",
+
+    website: "Our Website",
+
+    whatsapp: "Connect on WhatsApp",
 
     copyright: "All Rights Reserved.",
-    crafted: "Inspired by the Taste of Solapur",
-    backToTop: "Back to top",
+
+    backToTop: "Back to Top",
   },
 
   mr: {
-    eyebrow: "परंपरेशी जोडलेली चव",
-    brandDescription:
-      "सोलापूरच्या वैशिष्ट्यपूर्ण खाद्यसंस्कृतीतून आणि १९६८ पासून लाला नावाशी जोडलेल्या खाद्यपरंपरेतून प्रेरणा घेत मायाज लाला फूड प्रॉडक्ट्स महाराष्ट्राच्या परिचित चवी आजच्या पिढीपर्यंत पोहोचवत आहे.",
+    eyebrow: "चला, एकत्र प्रगती करूया",
 
-    heritageSmall: "चवीची समृद्ध परंपरा",
-    heritageYear: "सन १९६८ पासून",
+    heading: "पारंपरिक चव. व्यवसायाच्या नव्या संधी.",
+
+    description:
+      "तुमच्या दुकानासाठी किंवा व्यवसायासाठी आमची उत्पादने हवी आहेत? घाऊक खरेदीसाठी आमच्याशी संपर्क साधा.",
+
+    bulkCTA: "घाऊक चौकशी करा",
+
+    talk: "आमच्याशी बोला",
+
+    brandDescription:
+      "सोलापूरच्या वैशिष्ट्यपूर्ण खाद्यसंस्कृतीतून आणि १९६८ पासून लाला नावाशी जोडलेल्या खाद्यपरंपरेतून प्रेरणा घेत महाराष्ट्राच्या परिचित चवी आजच्या पिढीपर्यंत पोहोचवत आहोत.",
+
+    heritage: "१९६८ पासूनची चवीची परंपरा",
 
     explore: "महत्त्वाचे दुवे",
-    productsHeading: "आमची उत्पादने",
-    contactHeading: "संपर्क साधा",
 
-    links: [
-      { label: "मुख्यपृष्ठ", to: "/" },
-      { label: "आमच्याबद्दल", to: "/about" },
-      { label: "आमची उत्पादने", to: "/products" },
-      { label: "संपर्क", to: "/contact" },
-    ],
+    products: "आमची उत्पादने",
 
-    products: [
-      "सोलापुरी शेंगा चटणी",
-      "भाजलेले शेंगदाणे",
-      "साल काढलेले शेंगदाणे",
-      "मसाला शेंगदाणे",
-      "क्रंची मसाला शेंगदाणे",
-      "झणझणीत शेंगदाणा चिवडा",
-      "शेंगदाणा लाडू",
-    ],
+    contact: "संपर्क साधा",
 
-    location: "सोलापूर, महाराष्ट्र, भारत",
-    callUs: "फोन करा",
-    website: "वेबसाइट",
-    enquiry: "व्यावसायिक चौकशी करायची आहे?",
-    enquiryText:
-      "आमची उत्पादने, उपलब्धता आणि ऑर्डरच्या आवश्यकतांबद्दल माहिती घेण्यासाठी संपर्क साधा.",
-    enquiryCTA: "आमच्या टीमशी संपर्क साधा",
+    addressLabel: "आमचा पत्ता",
+
+    address:
+  "सिद्धलक्ष्मी महिला गृह उद्योग, नरसिंह हाईट्स, कडादी शाळेजवळ, भवानी पेठ, सोलापूर, महाराष्ट्र – ४१३००२.",
+
+    phone: "फोन करा",
+
+    website: "आमची वेबसाइट",
+
+    whatsapp: "व्हॉट्सॲपवर संपर्क साधा",
 
     copyright: "सर्व हक्क राखीव.",
-    crafted: "सोलापूरच्या अस्सल चवीतून प्रेरित",
+
     backToTop: "वर जा",
   },
 };
 
 // ==========================================
-// FOOTER LINK
+// PREMIUM ANIMATED BUTTON
+// ==========================================
+
+function PremiumButton({
+  children,
+  icon: Icon,
+  to,
+  href,
+  secondary = false,
+}) {
+  const reducedMotion = useReducedMotion();
+
+  const className = `
+    group relative isolate inline-flex
+    min-h-[48px] items-center justify-center
+    gap-3 overflow-hidden rounded-[7px]
+    border px-4 py-3
+    text-[13px] font-semibold
+
+    transition-all duration-300
+
+    motion-safe:hover:-translate-y-1
+    motion-safe:active:scale-[0.97]
+
+    focus-visible:outline-none
+    focus-visible:ring-2
+    focus-visible:ring-[#F5CD92]
+
+    ${
+      secondary
+        ? `border-[#B98B69]
+           bg-[#582830]
+           text-[#FFFFFF]
+           hover:text-[#35151D]`
+        : `border-[#F5CD92]
+           bg-gradient-to-r
+           from-[#FFE2B5] to-[#E7B779]
+           text-[#35151D]
+           shadow-[0_5px_20px_rgba(0,0,0,0.18)]`
+    }
+  `;
+
+  const inner = (
+    <>
+      {/* Sliding Background */}
+
+      <span
+        aria-hidden="true"
+        className={`
+          absolute inset-0 -z-10
+          -translate-x-full
+
+          transition-transform duration-500
+          ease-[cubic-bezier(0.22,1,0.36,1)]
+          group-hover:translate-x-0
+
+          ${
+            secondary
+              ? "bg-[#F5CD92]"
+              : "bg-[#FFF0D8]"
+          }
+        `}
+      />
+
+      {/* Moving Shine */}
+
+      {!reducedMotion && (
+        <span
+          aria-hidden="true"
+          className="
+            pointer-events-none absolute
+            inset-y-0 -left-1/2
+            w-1/3 -skew-x-12
+
+            bg-gradient-to-r
+            from-transparent via-white/50
+            to-transparent
+
+            transition-all duration-700
+            group-hover:left-[140%]
+          "
+        />
+      )}
+
+      {Icon && (
+        <Icon
+          size={18}
+          strokeWidth={1.8}
+          className="
+            shrink-0 transition-transform
+            duration-300
+            motion-safe:group-hover:-rotate-12
+          "
+        />
+      )}
+
+      <span>{children}</span>
+
+      <span className="
+        relative flex h-5 w-5
+        shrink-0 items-center
+        justify-center overflow-hidden
+      ">
+
+        <ArrowUpRight
+          size={19}
+          className="
+            absolute transition-transform
+            duration-300
+            motion-safe:group-hover:translate-x-6
+            motion-safe:group-hover:-translate-y-6
+          "
+        />
+
+        {!reducedMotion && (
+          <ArrowUpRight
+            size={19}
+            className="
+              absolute -translate-x-6 translate-y-6
+              transition-transform duration-300
+              group-hover:translate-x-0
+              group-hover:translate-y-0
+            "
+          />
+        )}
+
+      </span>
+    </>
+  );
+
+  return to ? (
+    <Link to={to} className={className}>
+      {inner}
+    </Link>
+  ) : (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={className}
+    >
+      {inner}
+    </a>
+  );
+}
+
+// ==========================================
+// FOOTER SECTION HEADING
+// ==========================================
+
+function FooterHeading({ children }) {
+  const reducedMotion = useReducedMotion();
+
+  return (
+    <div className="mb-4 sm:mb-5">
+
+      <h3 className="
+        font-['Poppins']
+        text-[16px] font-semibold
+        leading-relaxed
+        text-[#F5CD92]
+        sm:text-[18px]
+      ">
+        {children}
+      </h3>
+
+      <div className="mt-3 flex items-center gap-2">
+
+        <motion.span
+          initial={reducedMotion ? false : { scaleX: 0 }}
+          whileInView={{ scaleX: 1 }}
+          viewport={{ once: true }}
+          transition={{
+            duration: reducedMotion ? 0 : 0.8,
+            ease,
+          }}
+          className="
+            h-[2px] w-9 origin-left
+            rounded-full bg-[#F5CD92]
+          "
+        />
+
+        <span className="
+          h-[5px] w-[5px]
+          rotate-45 bg-[#F5CD92]
+        " />
+
+        <span className="h-px w-6 bg-[#94634F]" />
+
+      </div>
+    </div>
+  );
+}
+
+// ==========================================
+// ANIMATED FOOTER LINK
 // ==========================================
 
 function FooterLink({ to, children }) {
@@ -127,514 +346,997 @@ function FooterLink({ to, children }) {
     <Link
       to={to}
       className="
-        group inline-flex w-fit
-        items-center gap-2
-        text-[13px] leading-[1.8]
-        text-[#F3E5E0]/75
-        transition-all duration-300
-        hover:translate-x-1
-        hover:text-[#F1C98E]
+        group flex w-fit items-start
+        gap-2.5 py-1.5
+
+        text-[13px] font-medium
+        leading-[1.7]
+        text-[#FFF5ED]
+
+        transition-colors duration-300
+        hover:text-[#F5CD92]
+        focus-visible:outline-[#F5CD92]
       "
     >
-      <span
-        className="
-          h-1 w-1 rounded-full
-          bg-[#F1C98E]/50
-          transition-all duration-300
-          group-hover:w-3
-          group-hover:bg-[#F1C98E]
-        "
-      />
+      <span className="
+        relative mt-[5px] flex h-3 w-3
+        shrink-0 items-center justify-center
+      ">
 
-      {children}
+        <span className="
+          absolute h-1 w-1 rotate-45
+          bg-[#F5CD92]
+
+          transition-transform duration-300
+          group-hover:scale-0
+        " />
+
+        <ArrowRight
+          size={13}
+          strokeWidth={2}
+          className="
+            absolute -translate-x-2
+            text-[#F5CD92] opacity-0
+
+            transition-all duration-300
+            group-hover:translate-x-0
+            group-hover:opacity-100
+          "
+        />
+
+      </span>
+
+      <span className="
+        relative transition-transform duration-300
+        motion-safe:group-hover:translate-x-1
+      ">
+
+        {children}
+
+        <span className="
+          absolute -bottom-0.5 left-0
+          h-px w-full origin-left
+          scale-x-0 bg-[#F5CD92]
+
+          transition-transform duration-300
+          group-hover:scale-x-100
+        " />
+
+      </span>
     </Link>
   );
 }
 
 // ==========================================
-// FOOTER HEADING
+// CONTACT ITEM
 // ==========================================
 
-function FooterHeading({ children }) {
+function ContactItem({
+  icon: Icon,
+  label,
+  value,
+  href,
+  external = false,
+}) {
   return (
-    <div className="mb-6">
-      <h3
-        className="
-          text-[14px] font-semibold
-          tracking-[0.3px]
-          text-[#FFF8EE]
-        "
-      >
-        {children}
-      </h3>
+    <a
+      href={href}
+      target={external ? "_blank" : undefined}
+      rel={external ? "noopener noreferrer" : undefined}
+      className="group flex items-start gap-3"
+    >
 
-      <div className="mt-3 h-[2px] w-9 rounded-full bg-[#F1C98E]" />
-    </div>
+      <span className="
+        flex h-10 w-10 shrink-0
+        items-center justify-center
+        rounded-[8px]
+
+        border border-[#82534D]
+        bg-[#582830]
+        text-[#F5CD92]
+
+        transition-all duration-300
+        group-hover:border-[#F5CD92]
+        group-hover:bg-[#F5CD92]
+        group-hover:text-[#35151D]
+      ">
+
+        <Icon
+          size={18}
+          strokeWidth={1.8}
+          className="
+            transition-transform duration-300
+            motion-safe:group-hover:scale-110
+          "
+        />
+
+      </span>
+
+      <div className="min-w-0">
+
+        <p className="
+          text-[12px] font-semibold
+          text-[#F5CD92]
+        ">
+          {label}
+        </p>
+
+        <p className="
+          mt-1 break-words
+          text-[13px] font-medium
+          leading-[1.85]
+          text-[#FFF5ED]
+        ">
+          {value}
+        </p>
+
+      </div>
+    </a>
   );
 }
 
 // ==========================================
-// MAIN FOOTER
+// MAIN FOOTER COMPONENT
 // ==========================================
 
 export default function Footer() {
   const { language } = useContext(LanguageContext);
+
   const lang = language === "mr" ? "mr" : "en";
   const t = content[lang];
 
+  const reducedMotion = useReducedMotion();
+
   const currentYear = new Date().getFullYear();
+
+  const reveal = (delay = 0, y = 20) => ({
+    initial: reducedMotion
+      ? false
+      : { opacity: 0, y },
+
+    whileInView: {
+      opacity: 1,
+      y: 0,
+    },
+
+    viewport: {
+      once: true,
+      amount: 0.05,
+    },
+
+    transition: {
+      duration: reducedMotion ? 0 : 0.65,
+      delay: reducedMotion ? 0 : delay,
+      ease,
+    },
+  });
+
+  const listVariants = {
+    hidden: {},
+
+    visible: {
+      transition: {
+        staggerChildren: reducedMotion ? 0 : 0.045,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: {
+      opacity: reducedMotion ? 1 : 0,
+      x: reducedMotion ? 0 : -10,
+    },
+
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        duration: reducedMotion ? 0 : 0.4,
+        ease,
+      },
+    },
+  };
 
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: "smooth",
+      behavior: reducedMotion ? "auto" : "smooth",
     });
   };
 
   return (
-    <footer
-      className="
-        relative isolate overflow-hidden
-        bg-[#421D2B]
-        text-white
-      "
-    >
-      {/* BACKGROUND DECORATION */}
+    <footer className="
+      relative isolate overflow-hidden
+      border-t border-[#C99A6E]
+      bg-[#35151D]
+      text-[#FFF5ED]
+    ">
+
+      {/* =====================================
+          DARK PREMIUM BACKGROUND
+      ===================================== */}
+
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
-      >
-        <div
-          className="
-            absolute inset-0
-            bg-[radial-gradient(ellipse_at_80%_10%,#713448_0%,#421D2B_48%,#301621_100%)]
-          "
-        />
+        className="
+          pointer-events-none absolute
+          inset-0 -z-20
 
-        <div
-          className="
-            absolute -right-40 -top-44
-            h-[540px] w-[540px]
-            rounded-full
-            border border-[#F1C98E]/10
-          "
-        />
+          bg-[linear-gradient(120deg,#51232C_0%,#391820_50%,#2B1017_100%)]
+        "
+      />
 
-        <div
-          className="
-            absolute -right-24 -top-28
-            h-[380px] w-[380px]
-            rounded-full
-            border border-[#F1C98E]/10
-          "
-        />
+      <div
+        aria-hidden="true"
+        className="
+          pointer-events-none absolute
+          inset-0 -z-20
 
-        <div
-          className="
-            absolute -bottom-44 -left-40
-            h-[420px] w-[420px]
-            rounded-full bg-[#75437F]/15
-            blur-[110px]
-          "
-        />
+          bg-[radial-gradient(ellipse_at_top_left,#783D46_0%,transparent_50%)]
+          opacity-40
+        "
+      />
+
+      {/* Subtle Decorative Pattern */}
+
+      <div
+        aria-hidden="true"
+        className="
+          pointer-events-none absolute
+          inset-0 -z-20
+
+          bg-[radial-gradient(#F5CD92_1px,transparent_1px)]
+          [background-size:20px_20px]
+          opacity-[0.025]
+        "
+      />
+
+      <div
+        aria-hidden="true"
+        className="
+          pointer-events-none absolute
+          -bottom-60 -right-52 -z-10
+
+          h-[600px] w-[600px]
+          rounded-full
+          border border-[#F5CD92]/10
+        "
+      />
+
+      <div
+        aria-hidden="true"
+        className="
+          pointer-events-none absolute
+          -bottom-44 -right-36 -z-10
+
+          h-[460px] w-[460px]
+          rounded-full
+          border border-[#F5CD92]/10
+        "
+      />
+
+      {/* =====================================
+          ANIMATED GOLDEN TOP BORDER
+      ===================================== */}
+
+      <div className="
+        relative h-[2px] overflow-hidden
+        bg-[#A77655]
+      ">
+
+        {!reducedMotion && (
+          <motion.span
+            initial={{ x: "-100%" }}
+            whileInView={{ x: "400%" }}
+            viewport={{ once: true }}
+            transition={{
+              duration: 2,
+              ease: "easeInOut",
+            }}
+            className="
+              absolute inset-y-0 left-0 w-1/3
+
+              bg-gradient-to-r
+              from-transparent
+              via-[#FFEDCF]
+              to-transparent
+            "
+          />
+        )}
+
       </div>
 
       {/* =====================================
-          TOP ENQUIRY BANNER
+          COMPACT BUSINESS ENQUIRY STRIP
+          NO PRODUCT IMAGES
       ===================================== */}
-      <div className="border-b border-[#F1C98E]/15">
-        <div
-          className="
-            mx-auto flex max-w-[1350px]
-            flex-col gap-5
-            px-5 py-8
-            sm:px-8 sm:py-10
-            lg:flex-row lg:items-center
-            lg:justify-between lg:px-10
-          "
-        >
-          <div>
-            <div className="mb-3 flex items-center gap-3">
-              <span className="h-px w-8 bg-[#F1C98E]" />
 
-              <span
-                className="
+      <div className="
+        mx-auto max-w-[1430px]
+        px-4 pt-6
+        sm:px-8 sm:pt-8
+        lg:px-10
+      ">
+
+        <div className="
+          relative isolate overflow-hidden
+          rounded-[12px]
+          border border-[#82534D]
+
+          bg-[linear-gradient(115deg,#5D2C35_0%,#482029_60%,#3B1922_100%)]
+
+          px-5 py-5
+          sm:px-7 sm:py-6
+          lg:px-8
+        ">
+
+          {/* Decorative Gold Accent */}
+
+          <span className="
+            absolute bottom-0 left-0 top-0
+            w-[3px]
+
+            bg-gradient-to-b
+            from-[#FFE2B5]
+            via-[#C8925E]
+            to-[#8F5739]
+          " />
+
+          <div className="
+            flex flex-col items-start
+            justify-between gap-5
+
+            lg:flex-row lg:items-center
+          ">
+
+            <motion.div
+              {...reveal(0)}
+              className="max-w-[680px]"
+            >
+
+              <div className="mb-2 flex items-center gap-2">
+
+                <span className="h-px w-6 bg-[#F5CD92]" />
+
+                <span className="
                   text-[10px] font-bold
-                  uppercase tracking-[2px]
-                  text-[#F1C98E]
-                "
+                  tracking-[1.8px]
+                  text-[#F5CD92]
+                ">
+                  {t.eyebrow}
+                </span>
+
+              </div>
+
+              <h2 className="
+                font-['Poppins']
+                text-[21px] font-semibold
+                leading-[1.4]
+                tracking-[-0.4px]
+                text-white
+
+                sm:text-[24px]
+                xl:text-[27px]
+              ">
+                {t.heading}
+              </h2>
+
+              <p className="
+                mt-2 text-[13px]
+                font-medium leading-[1.85]
+                text-[#F8E6DD]
+              ">
+                {t.description}
+              </p>
+
+            </motion.div>
+
+            {/* CTA Buttons */}
+
+            <motion.div
+              {...reveal(0.1, 12)}
+              className="
+                flex w-full flex-wrap
+                items-center gap-3
+                lg:w-auto lg:shrink-0
+              "
+            >
+
+              <PremiumButton
+                to="/bulk-enquiry"
+                icon={Package}
               >
-                MAYA'S LALA FOOD PRODUCTS
+                {t.bulkCTA}
+              </PremiumButton>
+
+              <PremiumButton
+                href={WHATSAPP}
+                icon={MessageCircle}
+                secondary
+              >
+                {t.talk}
+              </PremiumButton>
+
+            </motion.div>
+
+          </div>
+        </div>
+      </div>
+
+      {/* =====================================
+          MAIN FOOTER CONTENT
+      ===================================== */}
+
+      <div className="
+        relative mx-auto grid
+        max-w-[1430px]
+        grid-cols-2
+
+        gap-x-4 gap-y-8
+        px-5 py-9
+
+        sm:gap-x-8 sm:px-8 sm:py-10
+
+        lg:grid-cols-[1.25fr_0.9fr_1.1fr_1.2fr]
+        lg:gap-8 lg:px-10 lg:py-10
+      ">
+
+        {/* =================================
+            BRAND INFORMATION
+        ================================= */}
+
+        <motion.div
+          {...reveal(0)}
+          className="col-span-2 min-w-0 lg:col-span-1"
+        >
+
+          <Link
+            to="/"
+            className="group inline-flex items-center gap-3"
+          >
+
+            {/* CSS Brand Emblem */}
+
+            <motion.div
+              whileHover={
+                reducedMotion
+                  ? undefined
+                  : { scale: 1.06, rotate: -6 }
+              }
+              transition={{
+                type: "spring",
+                stiffness: 300,
+                damping: 18,
+              }}
+              className="
+                relative flex h-[58px] w-[58px]
+                shrink-0 items-center justify-center
+
+                rounded-full
+                border border-[#F5CD92]
+
+                bg-gradient-to-br
+                from-[#793B45]
+                to-[#4C212A]
+
+                shadow-[0_5px_18px_rgba(0,0,0,0.25)]
+              "
+            >
+
+              <span className="
+                absolute inset-[4px]
+                rounded-full
+                border border-[#F5CD92]/60
+              " />
+
+              <span className="
+                absolute inset-[7px]
+                rounded-full
+                border border-[#F5CD92]/20
+              " />
+
+              <div className="text-center leading-none">
+
+                <span className="
+                  block font-serif
+                  text-[9px] italic
+                  text-[#F5CD92]
+                ">
+                  Maya's
+                </span>
+
+                <span className="
+                  mt-1 block font-serif
+                  text-[20px] font-bold
+                  text-white
+                ">
+                  LALA
+                </span>
+
+              </div>
+            </motion.div>
+
+            <div className="min-w-0">
+
+              <span className="
+                block font-serif
+                text-[25px] font-bold
+                leading-none
+                tracking-[-0.6px]
+                text-white
+              ">
+                Maya's LALA
               </span>
+
+              <span className="
+                mt-2 block text-[9px]
+                font-bold tracking-[2px]
+                text-[#F5CD92]
+              ">
+                FOOD PRODUCTS
+              </span>
+
             </div>
 
-            <h2
-              className="
-                font-['Poppins']
-                text-[22px] font-semibold
-                leading-[1.35] text-[#FFF8EE]
-                sm:text-[26px]
-              "
-            >
-              {t.enquiry}
-            </h2>
+          </Link>
 
-            <p
-              className="
-                mt-2 max-w-[600px]
-                text-[13px] leading-[1.8]
-                text-[#F3E5E0]/70
-              "
-            >
-              {t.enquiryText}
-            </p>
+          <p className="
+            mt-5 max-w-[440px]
+            text-[13px] font-medium
+            leading-[1.95]
+            text-[#FFF5ED]
+          ">
+            {t.brandDescription}
+          </p>
+
+          {/* Heritage Label */}
+
+          <div className="
+            mt-5 inline-flex max-w-full
+            items-center gap-3
+
+            rounded-[7px]
+            border border-[#82534D]
+            bg-[#4B2029]
+            px-3.5 py-3
+          ">
+
+            <span className="
+              shrink-0 border-r
+              border-[#94634F] pr-3
+
+              font-serif text-[27px]
+              font-bold leading-none
+              text-[#F5CD92]
+            ">
+              {lang === "mr" ? "१९६८" : "1968"}
+            </span>
+
+            <span className="
+              text-[11px] font-semibold
+              leading-[1.7]
+              text-[#FFF5ED]
+            ">
+              {t.heritage}
+            </span>
+
           </div>
 
-          {/* CTA */}
-          <Link
-            to="/contact"
-            className="
-              group relative inline-flex
-              min-h-[52px] shrink-0
-              items-center justify-center gap-4
-              self-start overflow-hidden
-              rounded-full
-              bg-[#FFF0DC]
-              px-6 py-3
-              text-[13px] font-semibold
-              text-[#68233C]
-              transition-all duration-500
-              hover:-translate-y-1
-              hover:shadow-[0_14px_35px_rgba(117,67,127,0.3)]
-            "
+        </motion.div>
+
+        {/* =================================
+            QUICK LINKS
+        ================================= */}
+
+        <motion.div
+          {...reveal(0.06)}
+          className="min-w-0"
+        >
+
+          <FooterHeading>
+            {t.explore}
+          </FooterHeading>
+
+          <motion.nav
+            aria-label={t.explore}
+            variants={listVariants}
+            initial={reducedMotion ? false : "hidden"}
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.05 }}
           >
-            {/* VIOLET DOT EXPAND */}
-            <span
-              aria-hidden="true"
-              className="
-                pointer-events-none absolute
-                left-1/2 top-1/2
-                h-3 w-3
-                -translate-x-1/2 -translate-y-1/2
-                scale-0 rounded-full
-                bg-[#75437F]
-                transition-transform duration-700
-                ease-[cubic-bezier(0.22,1,0.36,1)]
-                group-hover:scale-[90]
-              "
+
+            {links.map((item) => (
+              <motion.div
+                key={item.to}
+                variants={itemVariants}
+              >
+                <FooterLink to={item.to}>
+                  {item[lang]}
+                </FooterLink>
+              </motion.div>
+            ))}
+
+          </motion.nav>
+
+        </motion.div>
+
+        {/* =================================
+            PRODUCT LINKS
+        ================================= */}
+
+        <motion.div
+          {...reveal(0.12)}
+          className="min-w-0"
+        >
+
+          <FooterHeading>
+            {t.products}
+          </FooterHeading>
+
+          <motion.div
+            variants={listVariants}
+            initial={reducedMotion ? false : "hidden"}
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.05 }}
+          >
+
+            {products.map((product) => (
+              <motion.div
+                key={product.en}
+                variants={itemVariants}
+              >
+                <FooterLink to="/products">
+                  {product[lang]}
+                </FooterLink>
+              </motion.div>
+            ))}
+
+          </motion.div>
+
+        </motion.div>
+
+        {/* =================================
+            CONTACT INFORMATION
+        ================================= */}
+
+        <motion.div
+          {...reveal(0.18)}
+          className="
+            col-span-2 min-w-0
+            border-t border-[#70434A]
+            pt-6
+
+            lg:col-span-1
+            lg:border-0 lg:pt-0
+          "
+        >
+
+          <FooterHeading>
+            {t.contact}
+          </FooterHeading>
+
+          <div className="
+            grid grid-cols-1 gap-4
+            sm:grid-cols-2
+            lg:grid-cols-1
+          ">
+
+            <ContactItem
+              icon={MapPin}
+              label={t.addressLabel}
+              value={t.address}
+              href={MAP_URL}
+              external
             />
 
-            <span className="relative z-10 transition-colors duration-500 group-hover:text-white">
-              {t.enquiryCTA}
+            <ContactItem
+              icon={Phone}
+              label={t.phone}
+              value="+91 87664 93543"
+              href={`tel:+${PHONE}`}
+            />
+
+            
+
+          </div>
+
+          {/* Animated WhatsApp Button */}
+
+          <motion.a
+            href={WHATSAPP}
+            target="_blank"
+            rel="noopener noreferrer"
+
+            whileTap={
+              reducedMotion
+                ? undefined
+                : { scale: 0.97 }
+            }
+
+            className="
+              group relative isolate
+              mt-5 flex min-h-[46px]
+              items-center gap-3
+              overflow-hidden rounded-[7px]
+
+              border border-[#A77655]
+              bg-[#4D232C]
+              px-3.5 py-3
+
+              text-[12px] font-semibold
+              text-[#F5CD92]
+
+              transition-colors duration-300
+              hover:text-[#35151D]
+            "
+          >
+
+            <span className="
+              absolute inset-0 -z-10
+              -translate-x-full
+              bg-[#F5CD92]
+
+              transition-transform duration-500
+              group-hover:translate-x-0
+            " />
+
+            <MessageCircle
+              size={20}
+              strokeWidth={1.8}
+              className="shrink-0"
+            />
+
+            <span className="flex-1">
+              {t.whatsapp}
             </span>
 
             <ArrowUpRight
               size={17}
               className="
-                relative z-10
-                transition-all duration-500
-                group-hover:translate-x-1
-                group-hover:-translate-y-1
-                group-hover:text-white
+                shrink-0 transition-transform
+                duration-300
+
+                motion-safe:group-hover:translate-x-1
+                motion-safe:group-hover:-translate-y-1
               "
             />
-          </Link>
-        </div>
+
+          </motion.a>
+
+        </motion.div>
+
       </div>
 
       {/* =====================================
-          MAIN FOOTER GRID
+          GOLDEN DIVIDER
       ===================================== */}
-      <div
-        className="
-          mx-auto grid max-w-[1350px]
-          gap-10 px-5 py-14
-          sm:grid-cols-2 sm:px-8
-          lg:grid-cols-[1.35fr_0.7fr_1fr_0.9fr]
-          lg:gap-12 lg:px-10 lg:py-18
-        "
-      >
-        {/* BRAND COLUMN */}
-        <div>
-          {/* LOGO / BRAND */}
-          <Link to="/" className="inline-block">
-            <span
-              className="
-                block text-[23px] font-bold
-                tracking-[0.3px] text-[#FFF8EE]
-              "
-            >
-              Maya's LALA
-            </span>
 
-            <span
-              className="
-                mt-1 block text-[10px]
-                font-semibold uppercase
-                tracking-[3px] text-[#F1C98E]
-              "
-            >
-              FOOD PRODUCTS
-            </span>
-          </Link>
+      <div className="
+        mx-auto flex max-w-[1430px]
+        items-center gap-2.5
+        px-5 sm:px-8 lg:px-10
+      ">
 
-          {/* DESCRIPTION */}
-          <p
-            className="
-              mt-6 max-w-[340px]
-              text-[13px] leading-[1.95]
-              text-[#F3E5E0]/75
-            "
-          >
-            {t.brandDescription}
+        <motion.span
+          initial={reducedMotion ? false : { scaleX: 0 }}
+          whileInView={{ scaleX: 1 }}
+          viewport={{ once: true }}
+          transition={{
+            duration: reducedMotion ? 0 : 0.9,
+            ease,
+          }}
+          className="
+            h-px flex-1 origin-right
+
+            bg-gradient-to-r
+            from-transparent
+            to-[#B88760]
+          "
+        />
+
+        <span className="
+          h-1 w-1 rotate-45
+          bg-[#F5CD92]
+        " />
+
+        <span className="
+          h-2.5 w-2.5 rotate-45
+          border border-[#F5CD92]
+        " />
+
+        <span className="
+          h-1 w-1 rotate-45
+          bg-[#F5CD92]
+        " />
+
+        <motion.span
+          initial={reducedMotion ? false : { scaleX: 0 }}
+          whileInView={{ scaleX: 1 }}
+          viewport={{ once: true }}
+          transition={{
+            duration: reducedMotion ? 0 : 0.9,
+            ease,
+          }}
+          className="
+            h-px flex-1 origin-left
+
+            bg-gradient-to-l
+            from-transparent
+            to-[#B88760]
+          "
+        />
+
+      </div>
+
+      {/* =====================================
+          COPYRIGHT & DEVELOPER CREDIT
+      ===================================== */}
+
+      <div className="
+        relative mt-5
+        border-t border-[#5F333D]
+        bg-[#220C13]
+      ">
+
+        <div className="
+          mx-auto flex max-w-[1430px]
+          flex-col items-center
+          justify-between gap-3
+
+          px-5 pt-4
+          pb-[calc(80px+env(safe-area-inset-bottom))]
+
+          sm:px-8
+
+          lg:flex-row lg:gap-6
+          lg:px-10 lg:py-4
+        ">
+
+          {/* COPYRIGHT */}
+
+          <p className="
+            text-center text-[12px]
+            font-medium leading-[1.8]
+            text-[#FFF5ED]
+            lg:text-left
+          ">
+            © {currentYear} Maya's LALA Food Products.
+            {" "}{t.copyright}
           </p>
 
-          {/* HERITAGE LABEL */}
-          <div
-            className="
-              mt-6 inline-flex
-              items-center gap-3
-              rounded-full
-              border border-[#F1C98E]/25
-              bg-white/[0.05]
-              px-4 py-2.5
-            "
-          >
-            <span className="h-2 w-2 rounded-full bg-[#F1C98E]" />
+          {/* HASHGRID DEVELOPER CREDIT */}
 
-            <span
-              className="
-                text-[11px] font-semibold
-                tracking-[0.5px]
-                text-[#F1C98E]
-              "
-            >
-              {t.heritageYear}
+          <div className="
+            flex flex-wrap items-center
+            justify-center gap-x-2 gap-y-1
+          ">
+
+            <Code2
+              size={16}
+              strokeWidth={1.8}
+              className="shrink-0 text-[#F5CD92]"
+            />
+
+            <span className="
+              text-[12px] font-medium
+              text-[#FFF5ED]
+            ">
+              Designed & Developed by
             </span>
 
-            <span className="h-4 w-px bg-[#F1C98E]/30" />
-
-            <span className="text-[11px] text-[#FFF8EE]/80">
-              {t.heritageSmall}
-            </span>
-          </div>
-
-          {/* SOCIAL MEDIA */}
-          {SOCIALS.length > 0 && (
-            <div className="mt-7 flex items-center gap-3">
-              {SOCIALS.map((social) => {
-                const Icon = social.icon;
-
-                return (
-                  <a
-                    key={social.label}
-                    href={social.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={social.label}
-                    className="
-                      flex h-10 w-10
-                      items-center justify-center
-                      rounded-full
-                      border border-white/20
-                      bg-white/[0.05]
-                      text-[#FFF8EE]
-                      transition-all duration-300
-                      hover:-translate-y-1
-                      hover:border-[#F1C98E]
-                      hover:bg-[#75437F]
-                    "
-                  >
-                    <Icon size={15} />
-                  </a>
-                );
-              })}
-            </div>
-          )}
-        </div>
-
-        {/* QUICK LINKS */}
-        <div>
-          <FooterHeading>{t.explore}</FooterHeading>
-
-          <div className="flex flex-col gap-3">
-            {t.links.map((item) => (
-              <FooterLink key={item.to} to={item.to}>
-                {item.label}
-              </FooterLink>
-            ))}
-          </div>
-        </div>
-
-        {/* PRODUCTS */}
-        <div>
-          <FooterHeading>{t.productsHeading}</FooterHeading>
-
-          <div className="flex flex-col gap-2.5">
-            {t.products.map((product, index) => (
-              <FooterLink
-                key={index}
-                to="/products"
-              >
-                {product}
-              </FooterLink>
-            ))}
-          </div>
-        </div>
-
-        {/* CONTACT */}
-        <div>
-          <FooterHeading>{t.contactHeading}</FooterHeading>
-
-          <div className="flex flex-col gap-6">
-            {/* LOCATION */}
-            <div className="flex items-start gap-3">
-              <div
-                className="
-                  flex h-10 w-10 shrink-0
-                  items-center justify-center
-                  rounded-[12px]
-                  bg-[#F1C98E]/10
-                  text-[#F1C98E]
-                "
-              >
-                <MapPin size={19} strokeWidth={1.6} />
-              </div>
-
-              <div>
-                <p className="text-[11px] font-semibold text-[#F1C98E]">
-                  {lang === "mr" ? "ठिकाण" : "Location"}
-                </p>
-
-                <p className="mt-1 text-[13px] leading-[1.8] text-[#F3E5E0]/75">
-                  {t.location}
-                </p>
-              </div>
-            </div>
-
-            {/* PHONE */}
             <a
-              href={`tel:${PHONE}`}
-              className="group flex items-start gap-3"
-            >
-              <div
-                className="
-                  flex h-10 w-10 shrink-0
-                  items-center justify-center
-                  rounded-[12px]
-                  bg-[#F1C98E]/10
-                  text-[#F1C98E]
-                  transition-colors duration-300
-                  group-hover:bg-[#75437F]
-                  group-hover:text-white
-                "
-              >
-                <Phone size={19} strokeWidth={1.6} />
-              </div>
-
-              <div>
-                <p className="text-[11px] font-semibold text-[#F1C98E]">
-                  {t.callUs}
-                </p>
-
-                <p className="mt-1 text-[13px] text-[#F3E5E0]/80 transition-colors group-hover:text-white">
-                  {DISPLAY_PHONE}
-                </p>
-              </div>
-            </a>
-
-            {/* WEBSITE */}
-            <a
-              href={WEBSITE}
+              href={HASHGRID_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-start gap-3"
+              className="
+                group relative inline-flex
+                items-center gap-1.5
+
+                text-[12px] font-semibold
+                tracking-[0.1px]
+                text-[#F5CD92]
+
+                transition-colors duration-300
+                hover:text-white
+                focus-visible:outline-[#F5CD92]
+              "
             >
-              <div
+
+              <span>
+                Hashgrid Technologies Pvt. Ltd.
+              </span>
+
+              <ArrowUpRight
+                size={13}
+                strokeWidth={2}
                 className="
-                  flex h-10 w-10 shrink-0
-                  items-center justify-center
-                  rounded-[12px]
-                  bg-[#F1C98E]/10
-                  text-[#F1C98E]
-                  transition-colors duration-300
-                  group-hover:bg-[#75437F]
-                  group-hover:text-white
+                  shrink-0 transition-transform
+                  duration-300
+                  motion-safe:group-hover:translate-x-0.5
+                  motion-safe:group-hover:-translate-y-0.5
                 "
-              >
-                <Globe size={19} strokeWidth={1.6} />
-              </div>
+              />
 
-              <div>
-                <p className="text-[11px] font-semibold text-[#F1C98E]">
-                  {t.website}
-                </p>
+              <span className="
+                absolute -bottom-1 left-0
+                h-px w-full origin-left
+                scale-x-0 bg-[#F5CD92]
 
-                <p className="mt-1 break-all text-[13px] text-[#F3E5E0]/80 transition-colors group-hover:text-white">
-                  mayassiddhe.com
-                </p>
-              </div>
+                transition-transform duration-500
+                group-hover:scale-x-100
+              " />
+
             </a>
-          </div>
-        </div>
-      </div>
 
-      {/* =====================================
-          BOTTOM COPYRIGHT BAR
-      ===================================== */}
-      <div className="border-t border-[#F1C98E]/15">
-        <div
-          className="
-            mx-auto flex max-w-[1350px]
-            flex-col gap-4
-            px-5 py-5
-            sm:px-8
-            md:flex-row md:items-center
-            md:justify-between
-            lg:px-10
-          "
-        >
-          <p className="text-[11px] leading-[1.7] text-[#F3E5E0]/60">
-            © {currentYear} Maya's LALA Food Products. {t.copyright}
-          </p>
-
-          <div className="flex items-center gap-2 text-[11px] text-[#F3E5E0]/60">
-            <Heart size={13} className="text-[#F1C98E]" />
-            <span>{t.crafted}</span>
           </div>
 
           {/* BACK TO TOP */}
-          <button
+
+          <motion.button
             type="button"
             onClick={scrollToTop}
             aria-label={t.backToTop}
+
+            whileTap={
+              reducedMotion
+                ? undefined
+                : { scale: 0.92 }
+            }
+
             className="
-              group inline-flex w-fit
-              items-center gap-2
+              group flex shrink-0
+              items-center gap-2.5
+
               text-[11px] font-semibold
-              text-[#F1C98E]
-              transition-colors
-              hover:text-white
+              text-[#F5CD92]
             "
           >
+
             {t.backToTop}
 
-            <span
-              className="
-                flex h-8 w-8
-                items-center justify-center
-                rounded-full
-                border border-[#F1C98E]/35
-                transition-all duration-300
-                group-hover:-translate-y-1
-                group-hover:bg-[#75437F]
-              "
-            >
-              <ChevronUp size={15} />
+            <span className="
+              relative flex h-9 w-9
+              items-center justify-center
+              overflow-hidden rounded-full
+
+              border border-[#F5CD92]
+              bg-[#F5CD92]
+              text-[#35151D]
+
+              transition-all duration-300
+              group-hover:bg-white
+              group-hover:shadow-[0_0_18px_rgba(245,205,146,0.25)]
+            ">
+
+              <ChevronUp
+                size={19}
+                strokeWidth={2}
+                className="
+                  absolute
+                  transition-transform duration-300
+                  motion-safe:group-hover:-translate-y-8
+                "
+              />
+
+              {!reducedMotion && (
+                <ChevronUp
+                  size={19}
+                  strokeWidth={2}
+                  className="
+                    absolute translate-y-8
+                    transition-transform duration-300
+                    group-hover:translate-y-0
+                  "
+                />
+              )}
+
             </span>
-          </button>
+
+          </motion.button>
+
         </div>
       </div>
+
     </footer>
   );
 }
