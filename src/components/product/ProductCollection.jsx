@@ -89,12 +89,12 @@ const products = [
   {
     id: 6,
     image: "/p6.png",
-    en: "Spicy Peanut Chivda",
-    mr: "तिखट शेंगदाणा चिवडा",
+    en: "Maka Chivda",
+    mr: "मका चिवडा",
     descEn:
-      "A crunchy snack with familiar traditional spicy flavours.",
+      "A crunchy corn snack with traditional savoury flavours.",
     descMr:
-      "पारंपरिक तिखट चवीचा कुरकुरीत आणि खमंग चिवडा.",
+      "मक्यापासून बनवलेला कुरकुरीत आणि खमंग चिवडा.",
   },
   {
     id: 7,
@@ -105,6 +105,36 @@ const products = [
       "A traditional peanut sweet with a homemade touch.",
     descMr:
       "घरगुती गोडव्याची आठवण करून देणारे पारंपरिक शेंगदाणा लाडू.",
+  },
+  {
+    id: 8,
+    image: "/kala-masala.png",
+    en: "Solapuri Kala Tikhat Masala",
+    mr: "सोलापुरी काळा तिखट मसाला",
+    descEn:
+      "A traditional Solapuri spice blend with a bold, spicy flavour.",
+    descMr:
+      "अस्सल सोलापुरी पद्धतीचा खमंग आणि झणझणीत मसाला.",
+  },
+  {
+    id: 9,
+    image: "/jawas.png",
+    en: "Jawas Chutney",
+    mr: "जवस चटणी",
+    descEn:
+      "Traditional flaxseed chutney with garlic and spices.",
+    descMr:
+      "जवस, लसूण आणि मसाल्यांपासून बनवलेली पारंपरिक खमंग चटणी.",
+  },
+  {
+    id: 10,
+    image: "/karal.png",
+    en: "Karal Chutney",
+    mr: "कारळ चटणी",
+    descEn:
+      "A traditional niger seed chutney with a distinctive regional taste.",
+    descMr:
+      "कारळापासून बनवलेली खास पारंपरिक खमंग चटणी.",
   },
 ];
 

@@ -7,7 +7,6 @@ import {
   ArrowRight,
   MapPin,
   Phone,
-  Globe,
   ChevronUp,
   Package,
   MessageCircle,
@@ -31,31 +30,97 @@ const MAP_URL = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
 const ease = [0.22, 1, 0.36, 1];
 
 // ==========================================
-// NAVIGATION & PRODUCTS
+// NAVIGATION LINKS
 // ==========================================
 
 const links = [
-  { en: "Home", mr: "मुख्यपृष्ठ", to: "/" },
-  { en: "About Us", mr: "आमच्याबद्दल", to: "/about" },
-  { en: "Our Products", mr: "आमची उत्पादने", to: "/products" },
-  
+  {
+    en: "Home",
+    mr: "मुख्यपृष्ठ",
+    to: "/",
+  },
+  {
+    en: "About Us",
+    mr: "आमच्याबद्दल",
+    to: "/about",
+  },
+  {
+    en: "Our Products",
+    mr: "आमची उत्पादने",
+    to: "/products",
+  },
   {
     en: "Quality & Manufacturing",
     mr: "गुणवत्ता व उत्पादन",
     to: "/quality",
   },
-  { en: "Bulk Enquiry", mr: "घाऊक चौकशी", to: "/bulk-enquiry" },
-  { en: "Contact Us", mr: "संपर्क करा", to: "/contact" },
+  {
+    en: "Bulk Enquiry",
+    mr: "घाऊक चौकशी",
+    to: "/bulk-enquiry",
+  },
+  {
+    en: "Contact Us",
+    mr: "संपर्क करा",
+    to: "/contact",
+  },
 ];
 
+// ==========================================
+// ALL 10 PRODUCTS
+// ==========================================
+
 const products = [
-  { en: "Solapuri Shenga Chutney", mr: "सोलापुरी शेंगा चटणी" },
-  { en: "Roasted Peanuts", mr: "भाजलेले शेंगदाणे" },
-  { en: "Blanched Peanuts", mr: "साल काढलेले शेंगदाणे" },
-  { en: "Masala Peanuts", mr: "मसाला शेंगदाणे" },
-  { en: "Crunchy Masala Peanuts", mr: "कुरकुरीत मसाला शेंगदाणे" },
-  { en: "Spicy Peanut Chivda", mr: "तिखट शेंगदाणा चिवडा" },
-  { en: "Peanut Ladoo", mr: "शेंगदाणा लाडू" },
+  {
+    id: 1,
+    en: "Solapuri Shenga Chutney",
+    mr: "सोलापुरी शेंगा चटणी",
+  },
+  {
+    id: 2,
+    en: "Roasted Peanuts",
+    mr: "भाजलेले शेंगदाणे",
+  },
+  {
+    id: 3,
+    en: "Blanched Peanuts",
+    mr: "साल काढलेले शेंगदाणे",
+  },
+  {
+    id: 4,
+    en: "Masala Peanuts",
+    mr: "मसाला शेंगदाणे",
+  },
+  {
+    id: 5,
+    en: "Crunchy Masala Peanuts",
+    mr: "कुरकुरीत मसाला शेंगदाणे",
+  },
+  {
+    id: 6,
+    en: "Maka Chivda",
+    mr: "मका चिवडा",
+  },
+  {
+    id: 7,
+    en: "Peanut Ladoo",
+    mr: "शेंगदाणा लाडू",
+  },
+  {
+    id: 8,
+    en: "Solapuri Kala Tikhat Masala",
+    mr: "सोलापुरी काळा तिखट मसाला",
+  },
+  {
+    id: 9,
+    en: "Jawas Chutney",
+    mr: "जवस चटणी",
+  },
+  {
+    id: 10,
+    en: "Karal Chutney",
+    mr: "कारळ चटणी",
+  },
 ];
 
 // ==========================================
@@ -89,7 +154,7 @@ const content = {
     addressLabel: "Our Address",
 
     address:
-  "Siddhalaxmi Mahila Gruh Udyog, Narishing Heights, Near Kadadi School, Bhavani Peth, Solapur, Maharashtra – 413002.",
+      "Siddhalaxmi Mahila Gruh Udyog, Narishing Heights, Near Kadadi School, Bhavani Peth, Solapur, Maharashtra – 413002.",
 
     phone: "Call Us",
 
@@ -128,7 +193,7 @@ const content = {
     addressLabel: "आमचा पत्ता",
 
     address:
-  "सिद्धलक्ष्मी महिला गृह उद्योग, नरसिंह हाईट्स, कडादी शाळेजवळ, भवानी पेठ, सोलापूर, महाराष्ट्र – ४१३००२.",
+      "सिद्धलक्ष्मी महिला गृह उद्योग, नरसिंह हाईट्स, कडादी शाळेजवळ, भवानी पेठ, सोलापूर, महाराष्ट्र – ४१३००२.",
 
     phone: "फोन करा",
 
@@ -187,14 +252,11 @@ function PremiumButton({
 
   const inner = (
     <>
-      {/* Sliding Background */}
-
       <span
         aria-hidden="true"
         className={`
           absolute inset-0 -z-10
           -translate-x-full
-
           transition-transform duration-500
           ease-[cubic-bezier(0.22,1,0.36,1)]
           group-hover:translate-x-0
@@ -206,8 +268,6 @@ function PremiumButton({
           }
         `}
       />
-
-      {/* Moving Shine */}
 
       {!reducedMotion && (
         <span
@@ -241,12 +301,13 @@ function PremiumButton({
 
       <span>{children}</span>
 
-      <span className="
-        relative flex h-5 w-5
-        shrink-0 items-center
-        justify-center overflow-hidden
-      ">
-
+      <span
+        className="
+          relative flex h-5 w-5
+          shrink-0 items-center
+          justify-center overflow-hidden
+        "
+      >
         <ArrowUpRight
           size={19}
           className="
@@ -268,7 +329,6 @@ function PremiumButton({
             "
           />
         )}
-
       </span>
     </>
   );
@@ -298,19 +358,19 @@ function FooterHeading({ children }) {
 
   return (
     <div className="mb-4 sm:mb-5">
-
-      <h3 className="
-        font-['Poppins']
-        text-[16px] font-semibold
-        leading-relaxed
-        text-[#F5CD92]
-        sm:text-[18px]
-      ">
+      <h3
+        className="
+          font-['Poppins']
+          text-[16px] font-semibold
+          leading-relaxed
+          text-[#F5CD92]
+          sm:text-[18px]
+        "
+      >
         {children}
       </h3>
 
       <div className="mt-3 flex items-center gap-2">
-
         <motion.span
           initial={reducedMotion ? false : { scaleX: 0 }}
           whileInView={{ scaleX: 1 }}
@@ -325,13 +385,14 @@ function FooterHeading({ children }) {
           "
         />
 
-        <span className="
-          h-[5px] w-[5px]
-          rotate-45 bg-[#F5CD92]
-        " />
+        <span
+          className="
+            h-[5px] w-[5px]
+            rotate-45 bg-[#F5CD92]
+          "
+        />
 
         <span className="h-px w-6 bg-[#94634F]" />
-
       </div>
     </div>
   );
@@ -358,18 +419,21 @@ function FooterLink({ to, children }) {
         focus-visible:outline-[#F5CD92]
       "
     >
-      <span className="
-        relative mt-[5px] flex h-3 w-3
-        shrink-0 items-center justify-center
-      ">
+      <span
+        className="
+          relative mt-[5px] flex h-3 w-3
+          shrink-0 items-center justify-center
+        "
+      >
+        <span
+          className="
+            absolute h-1 w-1 rotate-45
+            bg-[#F5CD92]
 
-        <span className="
-          absolute h-1 w-1 rotate-45
-          bg-[#F5CD92]
-
-          transition-transform duration-300
-          group-hover:scale-0
-        " />
+            transition-transform duration-300
+            group-hover:scale-0
+          "
+        />
 
         <ArrowRight
           size={13}
@@ -383,25 +447,27 @@ function FooterLink({ to, children }) {
             group-hover:opacity-100
           "
         />
-
       </span>
 
-      <span className="
-        relative transition-transform duration-300
-        motion-safe:group-hover:translate-x-1
-      ">
-
+      <span
+        className="
+          relative transition-transform
+          duration-300
+          motion-safe:group-hover:translate-x-1
+        "
+      >
         {children}
 
-        <span className="
-          absolute -bottom-0.5 left-0
-          h-px w-full origin-left
-          scale-x-0 bg-[#F5CD92]
+        <span
+          className="
+            absolute -bottom-0.5 left-0
+            h-px w-full origin-left
+            scale-x-0 bg-[#F5CD92]
 
-          transition-transform duration-300
-          group-hover:scale-x-100
-        " />
-
+            transition-transform duration-300
+            group-hover:scale-x-100
+          "
+        />
       </span>
     </Link>
   );
@@ -425,22 +491,22 @@ function ContactItem({
       rel={external ? "noopener noreferrer" : undefined}
       className="group flex items-start gap-3"
     >
+      <span
+        className="
+          flex h-10 w-10 shrink-0
+          items-center justify-center
+          rounded-[8px]
 
-      <span className="
-        flex h-10 w-10 shrink-0
-        items-center justify-center
-        rounded-[8px]
+          border border-[#82534D]
+          bg-[#582830]
+          text-[#F5CD92]
 
-        border border-[#82534D]
-        bg-[#582830]
-        text-[#F5CD92]
-
-        transition-all duration-300
-        group-hover:border-[#F5CD92]
-        group-hover:bg-[#F5CD92]
-        group-hover:text-[#35151D]
-      ">
-
+          transition-all duration-300
+          group-hover:border-[#F5CD92]
+          group-hover:bg-[#F5CD92]
+          group-hover:text-[#35151D]
+        "
+      >
         <Icon
           size={18}
           strokeWidth={1.8}
@@ -449,27 +515,28 @@ function ContactItem({
             motion-safe:group-hover:scale-110
           "
         />
-
       </span>
 
       <div className="min-w-0">
-
-        <p className="
-          text-[12px] font-semibold
-          text-[#F5CD92]
-        ">
+        <p
+          className="
+            text-[12px] font-semibold
+            text-[#F5CD92]
+          "
+        >
           {label}
         </p>
 
-        <p className="
-          mt-1 break-words
-          text-[13px] font-medium
-          leading-[1.85]
-          text-[#FFF5ED]
-        ">
+        <p
+          className="
+            mt-1 break-words
+            text-[13px] font-medium
+            leading-[1.85]
+            text-[#FFF5ED]
+          "
+        >
           {value}
         </p>
-
       </div>
     </a>
   );
@@ -490,9 +557,7 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   const reveal = (delay = 0, y = 20) => ({
-    initial: reducedMotion
-      ? false
-      : { opacity: 0, y },
+    initial: reducedMotion ? false : { opacity: 0, y },
 
     whileInView: {
       opacity: 1,
@@ -511,32 +576,6 @@ export default function Footer() {
     },
   });
 
-  const listVariants = {
-    hidden: {},
-
-    visible: {
-      transition: {
-        staggerChildren: reducedMotion ? 0 : 0.045,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: {
-      opacity: reducedMotion ? 1 : 0,
-      x: reducedMotion ? 0 : -10,
-    },
-
-    visible: {
-      opacity: 1,
-      x: 0,
-      transition: {
-        duration: reducedMotion ? 0 : 0.4,
-        ease,
-      },
-    },
-  };
-
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -545,13 +584,14 @@ export default function Footer() {
   };
 
   return (
-    <footer className="
-      relative isolate overflow-hidden
-      border-t border-[#C99A6E]
-      bg-[#35151D]
-      text-[#FFF5ED]
-    ">
-
+    <footer
+      className="
+        relative isolate overflow-hidden
+        border-t border-[#C99A6E]
+        bg-[#35151D]
+        text-[#FFF5ED]
+      "
+    >
       {/* =====================================
           DARK PREMIUM BACKGROUND
       ===================================== */}
@@ -576,8 +616,6 @@ export default function Footer() {
           opacity-40
         "
       />
-
-      {/* Subtle Decorative Pattern */}
 
       <div
         aria-hidden="true"
@@ -619,11 +657,12 @@ export default function Footer() {
           ANIMATED GOLDEN TOP BORDER
       ===================================== */}
 
-      <div className="
-        relative h-[2px] overflow-hidden
-        bg-[#A77655]
-      ">
-
+      <div
+        className="
+          relative h-[2px] overflow-hidden
+          bg-[#A77655]
+        "
+      >
         {!reducedMotion && (
           <motion.span
             initial={{ x: "-100%" }}
@@ -643,95 +682,97 @@ export default function Footer() {
             "
           />
         )}
-
       </div>
 
       {/* =====================================
-          COMPACT BUSINESS ENQUIRY STRIP
-          NO PRODUCT IMAGES
+          BUSINESS ENQUIRY STRIP
       ===================================== */}
 
-      <div className="
-        mx-auto max-w-[1430px]
-        px-4 pt-6
-        sm:px-8 sm:pt-8
-        lg:px-10
-      ">
+      <div
+        className="
+          mx-auto max-w-[1430px]
+          px-4 pt-6
+          sm:px-8 sm:pt-8
+          lg:px-10
+        "
+      >
+        <div
+          className="
+            relative isolate overflow-hidden
+            rounded-[12px]
+            border border-[#82534D]
 
-        <div className="
-          relative isolate overflow-hidden
-          rounded-[12px]
-          border border-[#82534D]
+            bg-[linear-gradient(115deg,#5D2C35_0%,#482029_60%,#3B1922_100%)]
 
-          bg-[linear-gradient(115deg,#5D2C35_0%,#482029_60%,#3B1922_100%)]
+            px-5 py-5
+            sm:px-7 sm:py-6
+            lg:px-8
+          "
+        >
+          <span
+            className="
+              absolute bottom-0 left-0 top-0
+              w-[3px]
 
-          px-5 py-5
-          sm:px-7 sm:py-6
-          lg:px-8
-        ">
+              bg-gradient-to-b
+              from-[#FFE2B5]
+              via-[#C8925E]
+              to-[#8F5739]
+            "
+          />
 
-          {/* Decorative Gold Accent */}
-
-          <span className="
-            absolute bottom-0 left-0 top-0
-            w-[3px]
-
-            bg-gradient-to-b
-            from-[#FFE2B5]
-            via-[#C8925E]
-            to-[#8F5739]
-          " />
-
-          <div className="
-            flex flex-col items-start
-            justify-between gap-5
-
-            lg:flex-row lg:items-center
-          ">
-
+          <div
+            className="
+              flex flex-col items-start
+              justify-between gap-5
+              lg:flex-row lg:items-center
+            "
+          >
             <motion.div
               {...reveal(0)}
               className="max-w-[680px]"
             >
-
               <div className="mb-2 flex items-center gap-2">
-
                 <span className="h-px w-6 bg-[#F5CD92]" />
 
-                <span className="
-                  text-[10px] font-bold
-                  tracking-[1.8px]
-                  text-[#F5CD92]
-                ">
+                <span
+                  className="
+                    text-[10px] font-bold
+                    tracking-[1.8px]
+                    text-[#F5CD92]
+                  "
+                >
                   {t.eyebrow}
                 </span>
-
               </div>
 
-              <h2 className="
-                font-['Poppins']
-                text-[21px] font-semibold
-                leading-[1.4]
-                tracking-[-0.4px]
-                text-white
+              <h2
+                className="
+                  font-['Poppins']
+                  text-[21px] font-semibold
+                  leading-[1.4]
+                  tracking-[-0.4px]
+                  text-white
 
-                sm:text-[24px]
-                xl:text-[27px]
-              ">
+                  sm:text-[24px]
+                  xl:text-[27px]
+                "
+              >
                 {t.heading}
               </h2>
 
-              <p className="
-                mt-2 text-[13px]
-                font-medium leading-[1.85]
-                text-[#F8E6DD]
-              ">
+              <p
+                className="
+                  mt-2 text-[13px]
+                  font-medium leading-[1.85]
+                  text-[#F8E6DD]
+                "
+              >
                 {t.description}
               </p>
-
             </motion.div>
 
-            {/* CTA Buttons */}
+            {/* CTA BUTTONS */}
 
             <motion.div
               {...reveal(0.1, 12)}
@@ -741,7 +782,6 @@ export default function Footer() {
                 lg:w-auto lg:shrink-0
               "
             >
-
               <PremiumButton
                 to="/bulk-enquiry"
                 icon={Package}
@@ -756,9 +796,7 @@ export default function Footer() {
               >
                 {t.talk}
               </PremiumButton>
-
             </motion.div>
-
           </div>
         </div>
       </div>
@@ -767,20 +805,21 @@ export default function Footer() {
           MAIN FOOTER CONTENT
       ===================================== */}
 
-      <div className="
-        relative mx-auto grid
-        max-w-[1430px]
-        grid-cols-2
+      <div
+        className="
+          relative mx-auto grid
+          max-w-[1430px]
+          grid-cols-2 items-start
 
-        gap-x-4 gap-y-8
-        px-5 py-9
+          gap-x-4 gap-y-8
+          px-5 py-9
 
-        sm:gap-x-8 sm:px-8 sm:py-10
+          sm:gap-x-8 sm:px-8 sm:py-10
 
-        lg:grid-cols-[1.25fr_0.9fr_1.1fr_1.2fr]
-        lg:gap-8 lg:px-10 lg:py-10
-      ">
-
+          lg:grid-cols-[1.25fr_0.9fr_1.1fr_1.2fr]
+          lg:gap-8 lg:px-10 lg:py-10
+        "
+      >
         {/* =================================
             BRAND INFORMATION
         ================================= */}
@@ -789,14 +828,10 @@ export default function Footer() {
           {...reveal(0)}
           className="col-span-2 min-w-0 lg:col-span-1"
         >
-
           <Link
             to="/"
             className="group inline-flex items-center gap-3"
           >
-
-            {/* CSS Brand Emblem */}
-
             <motion.div
               whileHover={
                 reducedMotion
@@ -822,178 +857,167 @@ export default function Footer() {
                 shadow-[0_5px_18px_rgba(0,0,0,0.25)]
               "
             >
+              <span
+                className="
+                  absolute inset-[4px]
+                  rounded-full
+                  border border-[#F5CD92]/60
+                "
+              />
 
-              <span className="
-                absolute inset-[4px]
-                rounded-full
-                border border-[#F5CD92]/60
-              " />
-
-              <span className="
-                absolute inset-[7px]
-                rounded-full
-                border border-[#F5CD92]/20
-              " />
+              <span
+                className="
+                  absolute inset-[7px]
+                  rounded-full
+                  border border-[#F5CD92]/20
+                "
+              />
 
               <div className="text-center leading-none">
-
-                <span className="
-                  block font-serif
-                  text-[9px] italic
-                  text-[#F5CD92]
-                ">
+                <span
+                  className="
+                    block font-serif
+                    text-[9px] italic
+                    text-[#F5CD92]
+                  "
+                >
                   Maya's
                 </span>
 
-                <span className="
-                  mt-1 block font-serif
-                  text-[20px] font-bold
-                  text-white
-                ">
+                <span
+                  className="
+                    mt-1 block font-serif
+                    text-[20px] font-bold
+                    text-white
+                  "
+                >
                   LALA
                 </span>
-
               </div>
             </motion.div>
 
             <div className="min-w-0">
-
-              <span className="
-                block font-serif
-                text-[25px] font-bold
-                leading-none
-                tracking-[-0.6px]
-                text-white
-              ">
+              <span
+                className="
+                  block font-serif
+                  text-[25px] font-bold
+                  leading-none
+                  tracking-[-0.6px]
+                  text-white
+                "
+              >
                 Maya's LALA
               </span>
 
-              <span className="
-                mt-2 block text-[9px]
-                font-bold tracking-[2px]
-                text-[#F5CD92]
-              ">
+              <span
+                className="
+                  mt-2 block text-[9px]
+                  font-bold tracking-[2px]
+                  text-[#F5CD92]
+                "
+              >
                 FOOD PRODUCTS
               </span>
-
             </div>
-
           </Link>
 
-          <p className="
-            mt-5 max-w-[440px]
-            text-[13px] font-medium
-            leading-[1.95]
-            text-[#FFF5ED]
-          ">
+          <p
+            className="
+              mt-5 max-w-[440px]
+              text-[13px] font-medium
+              leading-[1.95]
+              text-[#FFF5ED]
+            "
+          >
             {t.brandDescription}
           </p>
 
-          {/* Heritage Label */}
+          {/* HERITAGE LABEL */}
 
-          <div className="
-            mt-5 inline-flex max-w-full
-            items-center gap-3
+          <div
+            className="
+              mt-5 inline-flex max-w-full
+              items-center gap-3
 
-            rounded-[7px]
-            border border-[#82534D]
-            bg-[#4B2029]
-            px-3.5 py-3
-          ">
+              rounded-[7px]
+              border border-[#82534D]
+              bg-[#4B2029]
+              px-3.5 py-3
+            "
+          >
+            <span
+              className="
+                shrink-0 border-r
+                border-[#94634F] pr-3
 
-            <span className="
-              shrink-0 border-r
-              border-[#94634F] pr-3
-
-              font-serif text-[27px]
-              font-bold leading-none
-              text-[#F5CD92]
-            ">
+                font-serif text-[27px]
+                font-bold leading-none
+                text-[#F5CD92]
+              "
+            >
               {lang === "mr" ? "१९६८" : "1968"}
             </span>
 
-            <span className="
-              text-[11px] font-semibold
-              leading-[1.7]
-              text-[#FFF5ED]
-            ">
+            <span
+              className="
+                text-[11px] font-semibold
+                leading-[1.7]
+                text-[#FFF5ED]
+              "
+            >
               {t.heritage}
             </span>
-
           </div>
-
         </motion.div>
 
         {/* =================================
             QUICK LINKS
         ================================= */}
 
-        <motion.div
-          {...reveal(0.06)}
-          className="min-w-0"
-        >
-
+        <div className="min-w-0">
           <FooterHeading>
             {t.explore}
           </FooterHeading>
 
-          <motion.nav
-            aria-label={t.explore}
-            variants={listVariants}
-            initial={reducedMotion ? false : "hidden"}
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.05 }}
-          >
-
+          <nav aria-label={t.explore}>
             {links.map((item) => (
-              <motion.div
-                key={item.to}
-                variants={itemVariants}
-              >
+              <div key={item.to}>
                 <FooterLink to={item.to}>
                   {item[lang]}
                 </FooterLink>
-              </motion.div>
+              </div>
             ))}
-
-          </motion.nav>
-
-        </motion.div>
+          </nav>
+        </div>
 
         {/* =================================
-            PRODUCT LINKS
+            ALL 10 PRODUCT LINKS
         ================================= */}
 
-        <motion.div
-          {...reveal(0.12)}
-          className="min-w-0"
-        >
-
+        <div className="min-w-0">
           <FooterHeading>
             {t.products}
           </FooterHeading>
 
-          <motion.div
-            variants={listVariants}
-            initial={reducedMotion ? false : "hidden"}
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.05 }}
+          <nav
+            aria-label={t.products}
+            className="
+              flex flex-col
+              overflow-visible
+            "
           >
-
             {products.map((product) => (
-              <motion.div
-                key={product.en}
-                variants={itemVariants}
+              <div
+                key={product.id}
+                className="min-w-0"
               >
                 <FooterLink to="/products">
                   {product[lang]}
                 </FooterLink>
-              </motion.div>
+              </div>
             ))}
-
-          </motion.div>
-
-        </motion.div>
+          </nav>
+        </div>
 
         {/* =================================
             CONTACT INFORMATION
@@ -1010,17 +1034,17 @@ export default function Footer() {
             lg:border-0 lg:pt-0
           "
         >
-
           <FooterHeading>
             {t.contact}
           </FooterHeading>
 
-          <div className="
-            grid grid-cols-1 gap-4
-            sm:grid-cols-2
-            lg:grid-cols-1
-          ">
-
+          <div
+            className="
+              grid grid-cols-1 gap-4
+              sm:grid-cols-2
+              lg:grid-cols-1
+            "
+          >
             <ContactItem
               icon={MapPin}
               label={t.addressLabel}
@@ -1035,12 +1059,9 @@ export default function Footer() {
               value="+91 87664 93543"
               href={`tel:+${PHONE}`}
             />
-
-            
-
           </div>
 
-          {/* Animated WhatsApp Button */}
+          {/* WHATSAPP BUTTON */}
 
           <motion.a
             href={WHATSAPP}
@@ -1070,15 +1091,16 @@ export default function Footer() {
               hover:text-[#35151D]
             "
           >
+            <span
+              className="
+                absolute inset-0 -z-10
+                -translate-x-full
+                bg-[#F5CD92]
 
-            <span className="
-              absolute inset-0 -z-10
-              -translate-x-full
-              bg-[#F5CD92]
-
-              transition-transform duration-500
-              group-hover:translate-x-0
-            " />
+                transition-transform duration-500
+                group-hover:translate-x-0
+              "
+            />
 
             <MessageCircle
               size={20}
@@ -1100,23 +1122,21 @@ export default function Footer() {
                 motion-safe:group-hover:-translate-y-1
               "
             />
-
           </motion.a>
-
         </motion.div>
-
       </div>
 
       {/* =====================================
           GOLDEN DIVIDER
       ===================================== */}
 
-      <div className="
-        mx-auto flex max-w-[1430px]
-        items-center gap-2.5
-        px-5 sm:px-8 lg:px-10
-      ">
-
+      <div
+        className="
+          mx-auto flex max-w-[1430px]
+          items-center gap-2.5
+          px-5 sm:px-8 lg:px-10
+        "
+      >
         <motion.span
           initial={reducedMotion ? false : { scaleX: 0 }}
           whileInView={{ scaleX: 1 }}
@@ -1127,27 +1147,32 @@ export default function Footer() {
           }}
           className="
             h-px flex-1 origin-right
-
             bg-gradient-to-r
             from-transparent
             to-[#B88760]
           "
         />
 
-        <span className="
-          h-1 w-1 rotate-45
-          bg-[#F5CD92]
-        " />
+        <span
+          className="
+            h-1 w-1 rotate-45
+            bg-[#F5CD92]
+          "
+        />
 
-        <span className="
-          h-2.5 w-2.5 rotate-45
-          border border-[#F5CD92]
-        " />
+        <span
+          className="
+            h-2.5 w-2.5 rotate-45
+            border border-[#F5CD92]
+          "
+        />
 
-        <span className="
-          h-1 w-1 rotate-45
-          bg-[#F5CD92]
-        " />
+        <span
+          className="
+            h-1 w-1 rotate-45
+            bg-[#F5CD92]
+          "
+        />
 
         <motion.span
           initial={reducedMotion ? false : { scaleX: 0 }}
@@ -1159,68 +1184,73 @@ export default function Footer() {
           }}
           className="
             h-px flex-1 origin-left
-
             bg-gradient-to-l
             from-transparent
             to-[#B88760]
           "
         />
-
       </div>
 
       {/* =====================================
           COPYRIGHT & DEVELOPER CREDIT
       ===================================== */}
 
-      <div className="
-        relative mt-5
-        border-t border-[#5F333D]
-        bg-[#220C13]
-      ">
+      <div
+        className="
+          relative mt-5
+          border-t border-[#5F333D]
+          bg-[#220C13]
+        "
+      >
+        <div
+          className="
+            mx-auto flex max-w-[1430px]
+            flex-col items-center
+            justify-between gap-3
 
-        <div className="
-          mx-auto flex max-w-[1430px]
-          flex-col items-center
-          justify-between gap-3
+            px-5 pt-4
+            pb-[calc(80px+env(safe-area-inset-bottom))]
 
-          px-5 pt-4
-          pb-[calc(80px+env(safe-area-inset-bottom))]
+            sm:px-8
 
-          sm:px-8
-
-          lg:flex-row lg:gap-6
-          lg:px-10 lg:py-4
-        ">
-
+            lg:flex-row lg:gap-6
+            lg:px-10 lg:py-4
+          "
+        >
           {/* COPYRIGHT */}
 
-          <p className="
-            text-center text-[12px]
-            font-medium leading-[1.8]
-            text-[#FFF5ED]
-            lg:text-left
-          ">
+          <p
+            className="
+              text-center text-[12px]
+              font-medium leading-[1.8]
+              text-[#FFF5ED]
+              lg:text-left
+            "
+          >
             © {currentYear} Maya's LALA Food Products.
             {" "}{t.copyright}
           </p>
 
           {/* HASHGRID DEVELOPER CREDIT */}
 
-          <div className="
-            flex flex-wrap items-center
-            justify-center gap-x-2 gap-y-1
-          ">
-
+          <div
+            className="
+              flex flex-wrap items-center
+              justify-center gap-x-2 gap-y-1
+            "
+          >
             <Code2
               size={16}
               strokeWidth={1.8}
               className="shrink-0 text-[#F5CD92]"
             />
 
-            <span className="
-              text-[12px] font-medium
-              text-[#FFF5ED]
-            ">
+            <span
+              className="
+                text-[12px] font-medium
+                text-[#FFF5ED]
+              "
+            >
               Designed & Developed by
             </span>
 
@@ -1241,7 +1271,6 @@ export default function Footer() {
                 focus-visible:outline-[#F5CD92]
               "
             >
-
               <span>
                 Hashgrid Technologies Pvt. Ltd.
               </span>
@@ -1257,17 +1286,17 @@ export default function Footer() {
                 "
               />
 
-              <span className="
-                absolute -bottom-1 left-0
-                h-px w-full origin-left
-                scale-x-0 bg-[#F5CD92]
+              <span
+                className="
+                  absolute -bottom-1 left-0
+                  h-px w-full origin-left
+                  scale-x-0 bg-[#F5CD92]
 
-                transition-transform duration-500
-                group-hover:scale-x-100
-              " />
-
+                  transition-transform duration-300
+                  group-hover:scale-x-100
+                "
+              />
             </a>
-
           </div>
 
           {/* BACK TO TOP */}
@@ -1291,29 +1320,29 @@ export default function Footer() {
               text-[#F5CD92]
             "
           >
-
             {t.backToTop}
 
-            <span className="
-              relative flex h-9 w-9
-              items-center justify-center
-              overflow-hidden rounded-full
+            <span
+              className="
+                relative flex h-9 w-9
+                items-center justify-center
+                overflow-hidden rounded-full
 
-              border border-[#F5CD92]
-              bg-[#F5CD92]
-              text-[#35151D]
+                border border-[#F5CD92]
+                bg-[#F5CD92]
+                text-[#35151D]
 
-              transition-all duration-300
-              group-hover:bg-white
-              group-hover:shadow-[0_0_18px_rgba(245,205,146,0.25)]
-            ">
-
+                transition-all duration-300
+                group-hover:bg-white
+                group-hover:shadow-[0_0_18px_rgba(245,205,146,0.25)]
+              "
+            >
               <ChevronUp
                 size={19}
                 strokeWidth={2}
                 className="
-                  absolute
-                  transition-transform duration-300
+                  absolute transition-transform
+                  duration-300
                   motion-safe:group-hover:-translate-y-8
                 "
               />
@@ -1329,14 +1358,10 @@ export default function Footer() {
                   "
                 />
               )}
-
             </span>
-
           </motion.button>
-
         </div>
       </div>
-
     </footer>
   );
 }

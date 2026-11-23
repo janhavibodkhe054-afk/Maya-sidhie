@@ -1,4 +1,3 @@
-
 import React, {
   useContext,
   useEffect,
@@ -7,12 +6,7 @@ import React, {
   useCallback,
 } from "react";
 
-import {
-  motion,
-  useInView,
-  useReducedMotion,
-} from "framer-motion";
-
+import { motion, useInView, useReducedMotion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowRight, ArrowLeft } from "lucide-react";
 
@@ -28,70 +22,94 @@ const products = [
     image: "/p1.png",
     en: "Solapuri Shenga Chutney",
     mr: "सोलापुरी शेंगा चटणी",
-    descEn:
-      "Bold Solapuri flavour inspired by traditional homemade recipes.",
-    descMr:
-      "पारंपरिक घरगुती पाककृतीतून आलेली अस्सल झणझणीत सोलापुरी चव.",
+    descEn: "Bold Solapuri flavour inspired by traditional homemade recipes.",
+    descMr: "पारंपरिक घरगुती पाककृतीतून आलेली अस्सल झणझणीत सोलापुरी चव.",
   },
   {
     id: 2,
     image: "/p2.png",
     en: "Roasted Peanuts",
     mr: "भाजलेले शेंगदाणे",
-    descEn:
-      "Crunchy, flavourful roasted peanuts for everyday snacking.",
-    descMr:
-      "रोजच्या खाण्यासाठी खमंग आणि कुरकुरीत भाजलेले शेंगदाणे.",
+    descEn: "Crunchy, flavourful roasted peanuts for everyday snacking.",
+    descMr: "रोजच्या खाण्यासाठी खमंग आणि कुरकुरीत भाजलेले शेंगदाणे.",
   },
   {
     id: 3,
     image: "/p3.png",
     en: "Blanched Peanuts",
     mr: "साल काढलेले शेंगदाणे",
-    descEn:
-      "Convenient skinless peanuts for a variety of recipes.",
-    descMr:
-      "विविध घरगुती पदार्थांसाठी उपयुक्त साल काढलेले शेंगदाणे.",
+    descEn: "Convenient skinless peanuts for a variety of recipes.",
+    descMr: "विविध घरगुती पदार्थांसाठी उपयुक्त साल काढलेले शेंगदाणे.",
   },
   {
     id: 4,
     image: "/p4.png",
     en: "Masala Peanuts",
     mr: "मसाला शेंगदाणे",
-    descEn:
-      "A delicious combination of peanuts and savoury spices.",
-    descMr:
-      "शेंगदाणे आणि मसाल्यांच्या मिश्रणातून तयार झालेली खमंग चव.",
+    descEn: "A delicious combination of peanuts and savoury spices.",
+    descMr: "शेंगदाणे आणि मसाल्यांच्या मिश्रणातून तयार झालेली खमंग चव.",
   },
   {
     id: 5,
     image: "/p5.png",
     en: "Crunchy Masala Peanuts",
     mr: "कुरकुरीत मसाला शेंगदाणे",
-    descEn:
-      "A satisfying crunch with a bold masala flavour.",
-    descMr:
-      "प्रत्येक घासात कुरकुरीतपणा आणि मसाल्यांची झणझणीत चव.",
+    descEn: "A satisfying crunch with a bold masala flavour.",
+    descMr: "प्रत्येक घासात कुरकुरीतपणा आणि मसाल्यांची झणझणीत चव.",
   },
   {
     id: 6,
     image: "/p6.png",
-    en: "Spicy Peanut Chivda",
-    mr: "तिखट शेंगदाणा चिवडा",
+    en: "Maka Chivda",
+    mr: "मका चिवडा",
     descEn:
-      "A crunchy snack with familiar traditional spicy flavours.",
+      "A crunchy and flavourful corn-based snack with traditional spices.",
     descMr:
-      "पारंपरिक तिखट चवीचा कुरकुरीत आणि खमंग चिवडा.",
+      "मक्यापासून बनवलेला पारंपरिक मसाल्यांचा खमंग आणि कुरकुरीत चिवडा.",
   },
   {
     id: 7,
     image: "/p7.png",
     en: "Peanut Ladoo",
     mr: "शेंगदाणा लाडू",
+    descEn: "A traditional peanut sweet with a homemade touch.",
+    descMr: "घरगुती गोडव्याची आठवण करून देणारे पारंपरिक शेंगदाणा लाडू.",
+  },
+
+  // NEW PRODUCT 08
+  {
+    id: 8,
+    image: "/kala-masala.png",
+    en: "Solapuri Kala Tikhat Masala",
+    mr: "सोलापुरी काळा तिखट मसाला",
     descEn:
-      "A traditional peanut sweet with a homemade touch.",
+      "A traditional blend of aromatic spices that brings a bold Solapuri flavour to everyday cooking.",
     descMr:
-      "घरगुती गोडव्याची आठवण करून देणारे पारंपरिक शेंगदाणा लाडू.",
+      "रोजच्या स्वयंपाकाला अस्सल सोलापुरी झणझणीत चव देणारे पारंपरिक मसाल्यांचे मिश्रण.",
+  },
+
+  // NEW PRODUCT 09
+  {
+    id: 9,
+    image: "/jawas.png",
+    en: "Jawas Chutney",
+    mr: "जवस चटणी",
+    descEn:
+      "A traditional flaxseed chutney blended with garlic, chilli and cumin for a distinctive flavour.",
+    descMr:
+      "जवस, लसूण, तिखट आणि जिरे यांच्या मिश्रणातून तयार झालेली खमंग पारंपरिक चटणी.",
+  },
+
+  // NEW PRODUCT 10
+  {
+    id: 10,
+    image: "/karal.png",
+    en: "Karal Chutney",
+    mr: "कारळ चटणी",
+    descEn:
+      "A traditional niger seed chutney with a distinctive nutty flavour that complements everyday meals.",
+    descMr:
+      "रोजच्या जेवणाची लज्जत वाढवणारी खमंग आणि चविष्ट पारंपरिक कारळ चटणी.",
   },
 ];
 
@@ -127,12 +145,7 @@ const ease = [0.22, 1, 0.36, 1];
 // PRODUCT CARD
 // ==========================================
 
-function ProductCard({
-  product,
-  lang,
-  index,
-  reducedMotion,
-}) {
+function ProductCard({ product, lang, index, reducedMotion }) {
   return (
     <motion.article
       whileHover={
@@ -267,7 +280,7 @@ function ProductCard({
           sm:px-6
         "
       >
-        {/* PRODUCT TITLE - NO POPPINS */}
+        {/* PRODUCT TITLE */}
         <h3
           className="
             text-[18px] font-bold
@@ -288,9 +301,7 @@ function ProductCard({
             sm:text-[14px]
           "
         >
-          {lang === "mr"
-            ? product.descMr
-            : product.descEn}
+          {lang === "mr" ? product.descMr : product.descEn}
         </p>
 
         {/* HOVER LINE */}
@@ -340,11 +351,11 @@ export default function OurProducts() {
 
   const getMaxIndex = useCallback(() => {
     const container = carouselRef.current;
+
     if (!container) return products.length - 1;
 
     const cards = Array.from(container.children);
-    const maxScroll =
-      container.scrollWidth - container.clientWidth;
+    const maxScroll = container.scrollWidth - container.clientWidth;
 
     let maxIndex = 0;
 
@@ -366,32 +377,29 @@ export default function OurProducts() {
   const scrollToCard = useCallback(
     (index) => {
       const container = carouselRef.current;
+
       if (!container) return;
 
       const maxIndex = getMaxIndex();
 
       const normalized =
-        index > maxIndex
-          ? 0
-          : index < 0
-          ? maxIndex
-          : index;
+        index > maxIndex ? 0 : index < 0 ? maxIndex : index;
 
       const card = container.children[normalized];
+
       if (!card) return;
 
       activeIndexRef.current = normalized;
       setActiveIndex(normalized);
 
-      const target =
-        card.offsetLeft - container.offsetLeft;
+      const target = card.offsetLeft - container.offsetLeft;
 
       container.scrollTo({
         left: target,
         behavior: reducedMotion ? "auto" : "smooth",
       });
     },
-    [getMaxIndex, reducedMotion]
+    [getMaxIndex, reducedMotion],
   );
 
   // ==========================================
@@ -416,6 +424,7 @@ export default function OurProducts() {
 
   const handleScroll = () => {
     const container = carouselRef.current;
+
     if (!container) return;
 
     const cards = Array.from(container.children);
@@ -424,12 +433,9 @@ export default function OurProducts() {
     let smallestDistance = Infinity;
 
     cards.forEach((card, index) => {
-      const position =
-        card.offsetLeft - container.offsetLeft;
+      const position = card.offsetLeft - container.offsetLeft;
 
-      const distance = Math.abs(
-        position - container.scrollLeft
-      );
+      const distance = Math.abs(position - container.scrollLeft);
 
       if (distance < smallestDistance) {
         smallestDistance = distance;
@@ -523,7 +529,10 @@ export default function OurProducts() {
           initial={
             reducedMotion
               ? false
-              : { opacity: 0, y: 25 }
+              : {
+                  opacity: 0,
+                  y: 25,
+                }
           }
           animate={
             visible
@@ -551,7 +560,7 @@ export default function OurProducts() {
               {t.eyebrow}
             </span>
 
-            {/* ONLY MAIN HEADING USES POPPINS */}
+            {/* MAIN HEADING */}
             <h2
               id="our-products-heading"
               className="
@@ -629,9 +638,7 @@ export default function OurProducts() {
             sm:gap-5
           "
           style={{
-            scrollBehavior: reducedMotion
-              ? "auto"
-              : "smooth",
+            scrollBehavior: reducedMotion ? "auto" : "smooth",
           }}
         >
           {products.map((product, index) => (
@@ -682,6 +689,7 @@ export default function OurProducts() {
 
         {/* BOTTOM NAVIGATION */}
         <div className="mt-3 flex items-center justify-between">
+
           {/* PROGRESS */}
           <div className="flex items-center gap-3">
             <span className="text-[12px] font-semibold text-[#7A4C43]">
@@ -703,8 +711,7 @@ export default function OurProducts() {
                 "
                 animate={{
                   width: `${
-                    ((activeIndex + 1) / products.length) *
-                    100
+                    ((activeIndex + 1) / products.length) * 100
                   }%`,
                 }}
                 transition={{ duration: 0.3 }}
@@ -718,6 +725,8 @@ export default function OurProducts() {
 
           {/* NAVIGATION ARROWS */}
           <div className="flex items-center gap-2">
+
+            {/* PREVIOUS BUTTON */}
             <button
               type="button"
               onClick={() =>
@@ -740,6 +749,7 @@ export default function OurProducts() {
               <ArrowLeft size={17} />
             </button>
 
+            {/* NEXT BUTTON */}
             <button
               type="button"
               onClick={() =>
@@ -761,6 +771,7 @@ export default function OurProducts() {
             >
               <ArrowRight size={17} />
             </button>
+
           </div>
         </div>
       </div>
